@@ -19,7 +19,7 @@ import { TypegooseModule } from "@haorama/nestjs-tg";
 @Module({
   imports: [
     TypegooseModule.forRoot(
-      "mongodb://root:password@localhost:27017/test",
+      "mongodb://localhost:27017/test",
     ),
   ],
 })
