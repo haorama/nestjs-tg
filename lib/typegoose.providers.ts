@@ -1,17 +1,17 @@
-import type { ModelFactory } from "./interfaces";
 import { Connection } from "mongoose";
 import { Provider } from "@nestjs/common";
 import { addModelToTypegoose, getName } from "@typegoose/typegoose";
 import { getConnectionToken, getModelToken } from "./utils/mongoose.utils";
+import { ModelDefinition } from "./interfaces";
 
-export function createModelProviders(
-  factories: ModelFactory[],
-  connection?: string,
+export function createTypegooseProviders(
+  models: ModelDefinition[],
+  connectionName?: string,
 ) {
-  const providers: Provider[] = factories.map((factory) => ({
+  const providers: Provider[] = models.map((factory) => ({
     provide: getModelToken(
       factory.model.name,
-      factory.connection || connection,
+      factory.connection || connectionName,
     ),
     useFactory: (connection: Connection) => {
       const schema =
@@ -23,7 +23,7 @@ export function createModelProviders(
 
       return addModelToTypegoose(ModelRaw, factory.model);
     },
-    inject: [getConnectionToken(factory.connection || connection)],
+    inject: [getConnectionToken(factory.connection || connectionName)],
   }));
 
   return providers;

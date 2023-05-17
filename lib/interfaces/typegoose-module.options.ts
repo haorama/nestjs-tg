@@ -1,20 +1,11 @@
-import { Type } from "@nestjs/common";
-import type { ConnectOptions, Schema } from "mongoose";
-
-type SchemaType = Schema | (() => Schema);
+import type { ConnectOptions, MongooseError } from "mongoose";
 
 export type ConnectionFactory = (connection: any, name: string) => any;
 
 export interface TypegooseModuleOptions extends ConnectOptions {
-  // connection name
-  name?: string;
+  connectionName?: string;
   connectionFactory?: ConnectionFactory;
+  connectionErrorFactory?: (error: MongooseError) => MongooseError;
   retryAttempts?: number;
   retryDelay?: number;
-}
-
-export interface ModelFactory {
-  model: Type<any>;
-  schema: SchemaType;
-  connection?: string;
 }

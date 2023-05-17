@@ -1,3 +1,4 @@
 export const MODEL_KEY = "HaoramaMongooseModel";
-export const MONGOOSE_CONNECTION = "HaoramaMongooseConnection";
-export const MONGOOSE_CONNECTION_NAME = "HaoramaMongooseConnectionName";
+export const TYPEGOOSE_DEFAULT_CONNECTION = "HaoramaTypegooseConnection";
+export const TYPEGOOSE_CONNECTION_NAME = "HaoramaTypegooseConnectionName";
+export const TYPEGOOSE_MODULE_OPTIONS = "HaoramaTypegooseModuleOptions";

@@ -1,7 +1,10 @@
 import { Logger } from "@nestjs/common";
 import { Observable } from "rxjs";
 import { delay, retryWhen, scan } from "rxjs/operators";
-import { MONGOOSE_CONNECTION, MODEL_KEY } from "../typegoose.constants";
+import {
+  MODEL_KEY,
+  TYPEGOOSE_DEFAULT_CONNECTION,
+} from "../typegoose.constants";
 
 export function getModelToken(model: string, connectionName?: string) {
   if (!!connectionName) {
@@ -12,9 +15,9 @@ export function getModelToken(model: string, connectionName?: string) {
 }
 
 export function getConnectionToken(name?: string) {
-  return name && name !== MONGOOSE_CONNECTION
-    ? `${MONGOOSE_CONNECTION}:${name}`
-    : MONGOOSE_CONNECTION;
+  return name && name !== TYPEGOOSE_DEFAULT_CONNECTION
+    ? `${name}Connection`
+    : TYPEGOOSE_DEFAULT_CONNECTION;
 }
 
 export function handleRetry(

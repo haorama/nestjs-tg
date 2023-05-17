@@ -7,7 +7,7 @@ import {
   Provider,
 } from "@nestjs/common";
 import { catchError, defer, lastValueFrom } from "rxjs";
-import { MONGOOSE_CONNECTION_NAME } from "./typegoose.constants";
+import { TYPEGOOSE_CONNECTION_NAME } from "./typegoose.constants";
 import { TypegooseModuleOptions } from "./interfaces";
 import mongoose from "mongoose";
 import { getConnectionToken, handleRetry } from "./utils/mongoose.utils";
@@ -17,28 +17,36 @@ import { ModuleRef } from "@nestjs/core";
 @Module({})
 export class TypegooseCoreModule implements OnApplicationShutdown {
   constructor(
-    @Inject(MONGOOSE_CONNECTION_NAME) private readonly connectionName: string,
+    @Inject(TYPEGOOSE_CONNECTION_NAME)
+    private readonly connectionName: string,
     private readonly moduleRef: ModuleRef,
   ) {}
 
-  async onApplicationShutdown() {
-    const connection = this.moduleRef.get<any>(this.connectionName);
-    connection && (await connection.close());
-  }
+  static forRoot(
+    uri: string,
+    options: TypegooseModuleOptions = {},
+  ): DynamicModule {
+    const {
+      connectionFactory,
+      connectionErrorFactory,
+      connectionName,
+      retryAttempts,
+      retryDelay,
+      ...mongooseOptions
+    } = options;
 
-  static register(uri: string, options: TypegooseModuleOptions): DynamicModule {
-    const { connectionFactory, retryAttempts, retryDelay, ...mongooseOptions } =
-      options;
-
-    const mongooseConnectionName = getConnectionToken(options.name);
+    const mongooseConnectionName = getConnectionToken(connectionName);
 
     const mongooseConnectionNameProvider = {
-      provide: MONGOOSE_CONNECTION_NAME,
+      provide: TYPEGOOSE_CONNECTION_NAME,
       useValue: mongooseConnectionName,
     };
 
     const mongooseConnectionFactory =
       connectionFactory || ((connection) => connection);
+
+    const mongooseConnectionError =
+      connectionErrorFactory || ((error) => error);
 
     const connectionProvider: Provider = {
       provide: mongooseConnectionName,
@@ -52,7 +60,7 @@ export class TypegooseCoreModule implements OnApplicationShutdown {
           }).pipe(
             handleRetry(retryAttempts, retryDelay),
             catchError((error) => {
-              throw new Error(error);
+              throw mongooseConnectionError(error);
             }),
           ),
         );
@@ -64,7 +72,12 @@ export class TypegooseCoreModule implements OnApplicationShutdown {
     return {
       module: TypegooseCoreModule,
       providers: [connectionProvider, mongooseConnectionNameProvider],
-      exports: [connectionProvider, mongooseConnectionNameProvider],
+      exports: [connectionProvider],
     };
+  }
+
+  async onApplicationShutdown() {
+    const connection = this.moduleRef.get<any>(this.connectionName);
+    connection && (await connection.close());
   }
 }
