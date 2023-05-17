@@ -21,8 +21,7 @@ export class TypegooseCoreModule implements OnApplicationShutdown {
     private readonly moduleRef: ModuleRef,
   ) {}
 
-  async onApplicationShutdown(signal?: string) {
-    console.log("database core module is shutting down...", signal);
+  async onApplicationShutdown() {
     const connection = this.moduleRef.get<any>(this.connectionName);
     connection && (await connection.close());
   }
