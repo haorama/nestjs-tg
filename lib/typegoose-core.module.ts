@@ -8,7 +8,7 @@ import {
 } from "@nestjs/common";
 import { catchError, defer, lastValueFrom } from "rxjs";
 import { MONGOOSE_CONNECTION_NAME } from "./typegoose.constants";
-import { DatabaseModuleOptions } from "./interfaces";
+import { TypegooseModuleOptions } from "./interfaces";
 import mongoose from "mongoose";
 import { getConnectionToken, handleRetry } from "./utils/mongoose.utils";
 import { ModuleRef } from "@nestjs/core";
@@ -27,7 +27,7 @@ export class TypegooseCoreModule implements OnApplicationShutdown {
     connection && (await connection.close());
   }
 
-  static register(uri: string, options: DatabaseModuleOptions): DynamicModule {
+  static register(uri: string, options: TypegooseModuleOptions): DynamicModule {
     const { connectionFactory, retryAttempts, retryDelay, ...mongooseOptions } =
       options;
 
