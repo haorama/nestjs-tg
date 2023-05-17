@@ -1,5 +1,5 @@
 {
-  "name": "nestjs-tg",
+  "name": "@haorama/nestjs-tg",
   "version": "0.0.1",
   "description": "Typegoose Module for nestjs",
   "main": "dist/index.js",
@@ -9,6 +9,13 @@
     "build": "rm -rf dist && tsc -p tsconfig.build.json",
     "test:e2e": "jest --config ./tests/jest-e2e.json --runInBand",
     "test:e2e:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/haorama/nestjs-tg.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [],
   "author": "Michael Lazuardy",
