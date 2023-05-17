@@ -4,6 +4,6 @@ services:
   mongodb:
     image: mongo:latest
     environment:
-      - MONGODB_DATABASE="test"
+      - MONGODB_DATABASE="nestjs_tg"
     ports:
       - 27017:27017
