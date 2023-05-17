@@ -18,3 +18,7 @@ docker-compose.yml
 .github/
 .circleci/
 renovate.json
+
+# env
+.env
+.env.example

@@ -1,12 +1,14 @@
 import { Module } from "@nestjs/common";
 import { TypegooseModule } from "../../lib";
 import { UserModule } from "./user/user.module";
+import { ConfigModule } from "@nestjs/config";
+
+require("dotenv").config();
 
 @Module({
   imports: [
-    TypegooseModule.forRoot(
-      "mongodb://root:password@localhost:27017/nestjs-tg?authSource=admin",
-    ),
+    ConfigModule.forRoot(),
+    TypegooseModule.forRoot(process.env.MONGO_URI as string),
     UserModule,
   ],
 })
