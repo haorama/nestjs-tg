@@ -34,7 +34,7 @@
     "@nestjs/core": "^9.4.1",
     "@nestjs/platform-express": "^9.4.1",
     "@nestjs/testing": "^9.4.1",
-    "@typegoose/typegoose": "^10.3.0 || ^11.0.0",
+    "@typegoose/typegoose": "^11.0.0",
     "@types/jest": "^29.5.1",
     "@types/node": "^20.1.7",
     "@types/supertest": "^2.0.12",
