@@ -1,0 +1,26 @@
+{
+  "name": "nestjs-tg",
+  "version": "0.0.1",
+  "description": "Typegoose Module for nestjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "@nestjs/common": "^8.0.0 || ^9.0.0",
+    "@nestjs/core": "^8.0.0 || ^9.0.0",
+    "@typegoose/typegoose": "^10.3.0 || ^11.0.0",
+    "mongoose": "^6.8.0 || ^7.0.0"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^9.4.1",
+    "@nestjs/core": "^9.4.1",
+    "@typegoose/typegoose": "^10.3.0 || ^11.0.0",
+    "mongoose": "^7.0.0",
+    "typescript": "^5.0.4"
+  }
+}
