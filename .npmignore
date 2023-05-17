@@ -13,11 +13,12 @@ tsconfig.build.json
 .prettierrc
 .prettierrc
 .commitlintrc.json
-docker-compose.yml
+docker-compose.yaml
 .husky/
 .github/
 .circleci/
 renovate.json
+.vscode
 
 # env
 .env
