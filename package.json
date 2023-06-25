@@ -1,6 +1,6 @@
 {
   "name": "@haorama/nestjs-tg",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Typegoose Module for nestjs",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
