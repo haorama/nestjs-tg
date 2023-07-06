@@ -17,4 +17,8 @@ export class UserService {
   find() {
     return this.userModel.find();
   }
+
+  getBio(userName: string) {
+    return `${userName} bio`;
+  }
 }

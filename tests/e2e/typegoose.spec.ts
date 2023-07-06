@@ -33,6 +33,6 @@ describe("Typegoose", () => {
   });
 
   afterEach(async () => {
-    await app.close();
+    await app?.close();
   });
 });

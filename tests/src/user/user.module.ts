@@ -6,14 +6,22 @@ import { UserService } from "./user.service";
 
 @Module({
   imports: [
-    TypegooseModule.forFeature([
+    TypegooseModule.forFeatureAsync([
       {
         model: User,
-        schema: UserSchema,
+        useFactory: () => {
+          UserSchema.pre("save", function (next) {
+            this.bio = `${this.name} Bio`;
+            next();
+          });
+
+          return UserSchema;
+        },
       },
     ]),
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}

@@ -7,8 +7,9 @@ This package are still in development and does not ready for production
 ```bash
 npm install mongoose @typegoose/typegoose @haorama/nestjs-tg
 
-# OR
 yarn add mongoose @typegoose/typegoose @haorama/nestjs-tg
+
+pnpm add mongoose @typegoose/typegoose @haorama/nestjs-tg
 ```
 
 ## Usage
@@ -28,5 +29,3 @@ export class AppModule {}
 
 ## Todos
 - Test using different / custom connectionName
-- Discriminators
-- forRootAsync / forFeatureAsync

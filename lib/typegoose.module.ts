@@ -1,7 +1,15 @@
-import { DynamicModule, Module } from "@nestjs/common";
+import { DynamicModule, Module, flatten } from "@nestjs/common";
 import { TypegooseCoreModule } from "./typegoose-core.module";
-import { createTypegooseProviders } from "./typegoose.providers";
-import type { TypegooseModuleOptions, ModelDefinition } from "./interfaces";
+import {
+  createTypegooseAsyncProviders,
+  createTypegooseProviders,
+} from "./typegoose.providers";
+import type {
+  TypegooseModuleOptions,
+  ModelDefinition,
+  TypegooseModuleAsyncOptions,
+} from "./interfaces";
+import { AsyncModelFactory } from "./interfaces/async-model-factory.interface";
 
 @Module({})
 export class TypegooseModule {
@@ -15,6 +23,10 @@ export class TypegooseModule {
     };
   }
 
+  static forRootAsync(options: TypegooseModuleAsyncOptions) {
+    return TypegooseCoreModule.forRootAsync(options);
+  }
+
   static forFeature(
     models: ModelDefinition[],
     connectionName?: string,
@@ -22,6 +34,22 @@ export class TypegooseModule {
     const providers = createTypegooseProviders(models, connectionName);
     return {
       module: TypegooseModule,
+      providers: providers,
+      exports: providers,
+    };
+  }
+
+  static forFeatureAsync(
+    factories: AsyncModelFactory[] = [],
+    connectionName?: string,
+  ): DynamicModule {
+    const providers = createTypegooseAsyncProviders(factories, connectionName);
+    const imports = factories.map((factory) => factory.imports || []);
+    const uniqImports = new Set(flatten(imports));
+
+    return {
+      module: TypegooseModule,
+      imports: [...uniqImports],
       providers: providers,
       exports: providers,
     };

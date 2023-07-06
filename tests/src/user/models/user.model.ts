@@ -9,6 +9,9 @@ export class User {
 
   @Prop()
   email: string;
+
+  @Prop()
+  bio?: string;
 }
 
 export const UserSchema = buildSchema(User);
