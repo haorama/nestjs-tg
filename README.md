@@ -1,7 +1,7 @@
 # Nestjs Typegoose
 Typegoose module for nestjs
 
-This package are still in development and does not ready for production
+it used almost same behavior as @nestjs/mongoose
 
 ## Installation
 ```bash
