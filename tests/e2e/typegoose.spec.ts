@@ -18,7 +18,7 @@ describe("Typegoose", () => {
     await app.init();
   });
 
-  it(`should return created document`, (done) => {
+  it("should return created document", (done) => {
     const createDto = { name: "Test User", email: "test@email.com", age: 5 };
     request(server)
       .post("/users")
@@ -33,6 +33,6 @@ describe("Typegoose", () => {
   });
 
   afterEach(async () => {
-    await app.close();
+    await app?.close();
   });
 });
